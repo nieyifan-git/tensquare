@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -32,6 +33,8 @@ public class UserService {
     IdWorker idWorker;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    BCryptPasswordEncoder encoder;
 
     /*
     * 发送短信验证码
@@ -68,6 +71,7 @@ public class UserService {
             throw new RuntimeException("请输入正确的验证码");
         }
         user.setId(idWorker.nextId()+"");
+        user.setPassword(encoder.encode(user.getPassword()));
         user.setFollowCount(0);
         user.setFansCount(0);
         user.setOnLine(0L);
@@ -76,5 +80,14 @@ public class UserService {
         user.setLastLoginDate(new Date());
         userRepository.save(user);
 
+    }
+
+    public User login(Map<String, String> map) {
+        String userName = map.get("userName");
+        User byUserName = userRepository.findByUserName(userName);
+        if(byUserName != null && encoder.matches(map.get("password"), byUserName.getPassword())){
+            return byUserName;
+        }
+        return null;
     }
 }

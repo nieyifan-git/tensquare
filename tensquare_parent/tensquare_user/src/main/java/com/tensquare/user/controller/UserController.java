@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 /**
  * @author nieyifan
  * @createTime 2019/12/26 11:52
@@ -32,6 +34,15 @@ public class UserController {
     public Result registerUser(@PathVariable(name = "code") String code, @RequestBody User user){
         userService.addUser(user,code);
         return Result.susccess();
+    }
+
+    @PostMapping("/login")
+    public Result login(@RequestBody Map<String,String> map){
+        User user = userService.login(map);
+        if(user != null){
+            return Result.susccess();
+        }
+        return Result.error();
     }
 
 }
