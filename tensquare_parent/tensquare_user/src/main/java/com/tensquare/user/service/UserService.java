@@ -63,13 +63,13 @@ public class UserService {
     *增加用户
     * */
     public void addUser(User user, String code){
-        String syscode = (String) redisTemplate.opsForValue().get("smscode_" + user.getMobile());
+      /*  String syscode = (String) redisTemplate.opsForValue().get("smscode_" + user.getMobile());
         if(syscode == null ){
             throw new RuntimeException("请点击获取验证码");
         }
         if(!syscode.equals(code)){
             throw new RuntimeException("请输入正确的验证码");
-        }
+        }*/
         user.setId(idWorker.nextId()+"");
         user.setPassword(encoder.encode(user.getPassword()));
         user.setFollowCount(0);

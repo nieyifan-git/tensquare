@@ -13,16 +13,16 @@ import java.util.Date;
  * @author nieyifan
  * @createTime 2019/12/26 12:04
  */
-@Entity
-@Table(name = "tb_user")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name = "tb_user")
 public class User {
 
     @Id
     private String id;
-
+    private String roleId;
     private String userName;
     private String password;
     private int followCount;

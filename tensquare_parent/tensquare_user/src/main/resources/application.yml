@@ -4,16 +4,18 @@ server:
 spring:
   application:
     name: tensquare_user
-    datasource:
-      driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://192.168.10.110:33306/tensquare_article?characterEncoding=utf-8
-      username: root
-      password: 123456
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.10.110:33306/tensquare_base?characterEncoding=utf-8
+    username: root
+    password: 123456
   jpa:
     database: mysql
     show-sql: true
     generate-ddl: true
-  redis:
-    host: 192.168.10.110
-  rabbitmq:
-    host: 127.0.0.1
+
+jwt:
+  config:
+    key: tensquare
+    ttl: 360000
+
